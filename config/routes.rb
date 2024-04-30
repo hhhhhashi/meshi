@@ -1,10 +1,18 @@
 Rails.application.routes.draw do
-
+  get 'users/show'
+  get 'users/edit'
   root to: "homes#top"
+
   devise_for :users
+
+  resources :post_images, only: [:new, :index, :show, :create, :destroy]
+
+  resources :users, only: [:show, :edit]
+
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
   end
+
 
   get "/homes/about" => "homes#about", as: "about"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
