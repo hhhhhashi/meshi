@@ -7,6 +7,7 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
   </head>
 
   <body>
@@ -18,7 +19,7 @@
         <li>
           <%= link_to 'マイページ', user_path(current_user.id) %>    </li>
         <li>
-          <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+          <%= link_to "ログアウト", destroy_user_session_path,  data: { turbo_method: :delete } %>
         </li>
       <% else %>
         <li>
@@ -30,5 +31,6 @@
       <% end %>
     </header>
     <%= yield %>
+    <%= javascript_importmap_tags %>
   </body>
 </html>
