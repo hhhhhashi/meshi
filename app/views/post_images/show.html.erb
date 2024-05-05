@@ -11,6 +11,23 @@
   <% if @post_image.user == current_user %>
     <%= link_to "削除", post_image_path(@post_image),  data: { turbo_method: :delete } %>
   <% end %>
+
+  <% if @post_image.favorited_by?(current_user) %>
+  <p>
+    <%= link_to post_image_favorite_path(@post_image), data: { turbo_method: :delete } do %>
+      ♥<%= @post_image.favorites.count %> いいね
+    <% end %>
+  </p>
+<% else %>
+  <p>
+    <%= link_to post_image_favorite_path(@post_image), data: { turbo_method: :post } do %>
+      ♡<%= @post_image.favorites.count %> いいね
+    <% end %>
+  </p>
+<% end %>
+
+
+
 </div>
 
 <div>
@@ -19,6 +36,9 @@
     <p><%= image_tag post_comment.user.get_profile_image %></p>
     <%= post_comment.user.name %>
     <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment %>
+    <% if post_comment.user == current_user %>
+      <%= link_to "削除", post_image_post_comment_path(post_comment.post_image, post_comment),  data: { turbo_method: :delete } %>
+    <% end %>
   <% end %>
 </div>
 <div>
